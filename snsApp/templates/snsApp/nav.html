@@ -1,0 +1,23 @@
+
+<div class="top-bar">
+  <div class="top-bar-left">
+    <ul class="menu">
+      <li><input type="search" placeholder="Search"></li>
+      <li><button type="button" class="hollow button"><i class="fi-magnifying-glass"></i></button></li>
+    </ul>
+  </div>
+  <div class="top-bar-right">
+    <ul class="menu">
+      <li><a href="#"><i class="fi-home"></i></a></li>
+      <li><a href="#"><i class="fi-mail"></i></a></li>
+      <li><a href="#">Profile</a></li>
+      {% if user.is_authenticated %}
+      <li><a href="#">Hello {{ user.username }}</a></li>
+      <li><a href="../logout"> Logout </a></li>
+      {% else %}
+      <li><a href="../signup/">Sign Up</a></li>
+      <li><a href="../login/">Login</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+body {
+  background-color: #FAFAF6;
+}
+
+.top-bar{
+  background: #FFFFFF;
+  border-bottom: 1px solid gray;
+
+  .menu{
+    background: #FFFFFF;
+  }
+}
+
+.grid-containor{
+  padding-top: 50px;
+}

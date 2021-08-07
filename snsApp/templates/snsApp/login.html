@@ -1,0 +1,9 @@
+{% include "./header.html" %}
+{% include "./nav.html" %}
+<h1>Login</h1>
+<form class="login_form" action="/login/" method="post">
+  {% csrf_token %}
+  Username: <input type="text" name="username" value="" size=50 /><br />
+  Password: <input type="text" name="password" value="" sieze=50 /><br />
+  <input type="submit" value="submit" />
+</form>

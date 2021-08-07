@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class AppUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     creationDate = models.DateField(null=False)
-    profileImage = models.ImageField(upload_to='images_profile', null=True, blank=True)
+    profileImage = models.ImageField(upload_to='images_profile', null=False, blank=True)
     bio = models.CharField(max_length=400, null=True, blank=True)
 
     def __unicode__(self):

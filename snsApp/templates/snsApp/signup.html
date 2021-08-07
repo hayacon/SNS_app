@@ -1,0 +1,26 @@
+{% include "./header.html" %}
+{% include "./nav.html" %}
+
+<div class="grid-containor" >
+  <div class="grid-x grid-margin-x">
+    <div class="cell large-2"></div>
+    <div class="cell auto">
+      <div class='callout primary'>
+        <h1>Sign Up</h1>
+        {% if registered %}
+          <strong>Thank you for signing up</strong>
+        {% else %}
+          <strong>Sign Up now !</strong>
+
+            <form id="user_form" action="/signup/" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ user_form.as_p}}
+              <!-- {{ profile_form.as_p}} -->
+              <input type="submit" name="submit" value="Sign Up" />
+            </form>
+          </div>
+        {% endif %}
+      </div>
+      <div class="cell auto"> Hey </div>
+  </div>
+</div>
