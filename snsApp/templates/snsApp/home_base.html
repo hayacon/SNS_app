@@ -1,0 +1,15 @@
+{% include "./header.html" %}
+{% include "./nav.html" %}
+<body>
+  <div class="grid-containor">
+    <div class="grid-x grid-margin-x">
+      <div class="cell large-4">empty cell</div>
+      <div class="cell auto">
+        {% block content %} contents {% endblock %}
+      </div>
+      <div class="cell auto">
+        {% block sidebar %}side bar{% endblock %}
+      </div>
+    </div>
+  </div>
+</body>

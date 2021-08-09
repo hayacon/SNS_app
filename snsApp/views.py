@@ -5,6 +5,10 @@ from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.contrib.auth import authenticate, login, logout
 
+def home(request):
+    return render(request, 'snsApp/home_base.html')
+
+
 def register(request):
     registered = False
 
@@ -35,7 +39,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/signup')
+                return HttpResponseRedirect('/')
             else:
                 return HttpResponse("Your account is disable")
         else:
@@ -44,4 +48,4 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect('../signup')
+    return render(request, "snsApp/logout.html")

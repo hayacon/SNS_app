@@ -1,26 +1,19 @@
-{% include "./header.html" %}
-{% include "./nav.html" %}
-
-<div class="grid-containor" >
-  <div class="grid-x grid-margin-x">
-    <div class="cell large-2"></div>
-    <div class="cell auto">
-      <div class='callout primary'>
-        <h1>Sign Up</h1>
-        {% if registered %}
-          <strong>Thank you for signing up</strong>
-        {% else %}
-          <strong>Sign Up now !</strong>
-
-            <form id="user_form" action="/signup/" method="post" enctype="multipart/form-data">
-              {% csrf_token %}
-              {{ user_form.as_p}}
-              <!-- {{ profile_form.as_p}} -->
-              <input type="submit" name="submit" value="Sign Up" />
-            </form>
-          </div>
-        {% endif %}
-      </div>
-      <div class="cell auto"> Hey </div>
-  </div>
-</div>
+{% extends "./register_base.html" %}
+{% block content %}
+    <div class="callout large" id="register-form">
+      SNS logo comes here...
+      {% if registered %}
+        <strong>Thank you for signing up</strong>
+      {% else %}
+          <form id="user_form" action="/signup/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ user_form.as_p}}
+            {{ profile_form.as_p}}
+            <button type="submit" class="hollow button" id="register-button">sign me up!</button>
+          </form>
+      {% endif %}
+    </div>
+    <div class="callout" id="option-message">
+      <p>Have an account? <a id="register-nav" href="/login"> Login </a></p>
+    </div>
+{% endblock %}

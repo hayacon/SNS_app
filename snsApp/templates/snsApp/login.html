@@ -1,9 +1,16 @@
-{% include "./header.html" %}
-{% include "./nav.html" %}
-<h1>Login</h1>
-<form class="login_form" action="/login/" method="post">
-  {% csrf_token %}
-  Username: <input type="text" name="username" value="" size=50 /><br />
-  Password: <input type="text" name="password" value="" sieze=50 /><br />
-  <input type="submit" value="submit" />
-</form>
+{% extends "./register_base.html" %}
+{% block content %}
+
+  <div class="callout large" id="register-form">
+    SNS logo comes here....
+    <form class="login_form" action="/login/" method="post">
+      {% csrf_token %}
+      <input class="register-input" type="text" name="username" placeholder="username" size=50 /><br />
+      <input class="register-input" type="password" name="password" placeholder="password" sieze=50 /><br />
+      <button type="submit" class="hollow button" id="register-button">login</button>
+    </form>
+  </div>
+  <div class="callout" id="option-message">
+    <p>Don't have an account? <a id="register-nav" href="/signup">Sing up</a></p>
+  </div>
+{% endblock %}
