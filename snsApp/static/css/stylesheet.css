@@ -1,3 +1,4 @@
+/* Main component stylesheet */
 body {
   background-color: #FAFAF6;
 }
@@ -6,7 +7,7 @@ body {
   height: 100%;
 }
 
-
+/* Register base stylesheet */
 .grid-containor{
   padding-top: 50px;
 }
@@ -16,15 +17,17 @@ body {
   height: 30px;
 }
 
+.register-input.date-birth {
+  width: 67px;
+  display: inline-block;
+}
+
 #register-button {
   width: 200px;
   height: 30px;
   text-align: center;
   padding: 0px;
   color: hsl(204 100% 48%);
-}
-
-.callout.large {
 }
 
 .callout {
@@ -48,6 +51,49 @@ body {
   color: hsl(204 100% 48%);
 }
 
+/* Sidebar stylesheet */
+
+.sidebar {
+  height: 60px;
+    text-align: left;
+}
+
+.sidebar-profile {
+  display: inline-block;
+  /* border: 1px solid black; */
+  margin: auto;
+}
+
+#sidebar-profile-img {
+  width: 60px;
+  height: 60px;
+}
+
+#sidebar-profile-user {
+  height: 50px;
+  margin-left: 5px;
+}
+
+#sidebar-profile-username {
+  margin: 0;
+}
+
+#sidebar-profile-name {
+  color: gray;
+}
+
+.thumbnail {
+  border-radius: 40px;
+  width: 60px;
+  height: 60px;
+  border: 1px solid;
+}
+
+.sidebar-chat {
+  height: 300px;
+  margin-top: 30px;
+  border: 1px solid black;
+}
 /* Nav bar stylesheet */
 .top-bar{
   background: #FFFFFF;
@@ -77,9 +123,11 @@ body {
 a {
   color: hsl(0 0% 56%);
 }
+
 .register-footer {
   text-align: center;
   margin-top: 60px;
+  /* border: 1px solid black; */
 }
 
 .lower-footer{

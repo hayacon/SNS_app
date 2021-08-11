@@ -1,0 +1,27 @@
+{% extends "./home_base.html" %}
+{% block sidebar %}
+  {% if user.is_authenticated %}
+    <div class="sidebar">
+      <div class="sidebar-profile" id="sidebar-profile-img">
+        {% if user_profile.profileImage %}
+          <a href="#"><img class="thumbnail" src="{{ img_url }}" alt="User profile image"></a>
+        {% else %}
+          <a href="#"><img class="thumbnail" src="/static/media/blank.png" alt="Defalut preofile image"></a>
+        {% endif %}
+      </div>
+      <div class="sidebar-profile" id="sidebar-profile-user">
+        <p id='sidebar-profile-username'>{{ user.username }}</p>
+        <p id='sidebar-profile-name'>{{ user.first_name }} {{ user.last_name }}</p>
+      </div>
+    </div>
+    <div class="sidebar-chat">
+      chat overview comes here
+    </div>
+    {% include "./footer.html" %}
+  {% else %}
+    <div class="callout">
+      <p>Please <a id="register-nav" href="/login">login</a> to your account.</p>
+      <p>Don't have an account? <a id="register-nav" href="/signup">sign up now!</a></p>
+    </div>
+  {% endif %}
+{% endblock %}

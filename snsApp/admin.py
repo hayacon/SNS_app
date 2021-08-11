@@ -3,7 +3,7 @@ from .models import *
 
 
 class AppUserAdmin(admin.ModelAdmin):
-    list_display=('user', 'creationDate', 'profileImage')
+    list_display=('user', 'profileImage', 'dateOfBirth', 'ocupation', 'organization', 'bio')
 
 
 class PostAdmin(admin.ModelAdmin):

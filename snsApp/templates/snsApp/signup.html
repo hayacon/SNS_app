@@ -4,6 +4,8 @@
       SNS logo comes here...
       {% if registered %}
         <strong>Thank you for signing up</strong>
+        <a href="">home</a>
+        <!-- add some links to go other page -->
       {% else %}
           <form id="user_form" action="/signup/" method="post" enctype="multipart/form-data">
             {% csrf_token %}
