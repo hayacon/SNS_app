@@ -1,0 +1,32 @@
+{% include "./header.html" %}
+<body>
+  {% include "./nav.html" %}
+  <div class="grid-containor">
+    <div class="grid-x grid-margin-x">
+      <div class="cell large-2"></div>
+      <div class="large-8 cell" style="border-top:1px solid black;">
+        <div class="user-home-profile" id="user-home-profile-img">
+            <img class="thumbnail" id="user-home-profile-thumbnail" src="{{ img_url }}" alt="user profile image">
+        </div>
+        <div class="user-home-profile" id="user-home-profile-info">
+          <h4 >{{ user }} <a href="/profile" class="hollow button" id="edit-profile-button">edit profile</a></h4>
+          <p> {{ user.first_name}} {{ user.last_name}}</p>
+          <p>{{ user_profile.bio }}</p>
+          <a href="#" class='button' onclick="overlay()" id="create-post-button">create new post</a>
+        </div>
+        <div id="overlay">
+          <div class="callout">
+            <form action="/user_home/" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ post_form.as_p }}
+              <button type="submit" class="button" id="new-post-button">post</button>
+              <a href="#" onclick="overlay()" class="button alert" id="new-post-button">cancel</a>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="cell auto"></div>
+    </div>
+  </div>
+  {% include "./footer.html" %}
+</body>

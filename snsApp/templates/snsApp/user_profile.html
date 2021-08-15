@@ -1,0 +1,54 @@
+{% extends "snsApp/home_base.html" %}
+{% block content %}
+  {% if user.is_authenticated %}
+
+    <div class="callout large" id='user-profile' style="width:450px;">
+      <div class="sidebar-profile" id="user-profile-img">
+        {% if user_profile.profileImage %}
+          <a href="#"><img class="thumbnail" id="user-profile-thumbnail" src="{{ img_url }}" alt="User profile image"></a>
+        {% else %}
+          <a href="#"><img class="thumbnail" id="user-profile-thumbnail" src="/static/media/blank.png" alt="Defalut preofile image"></a>
+        {% endif %}
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="small-5 cell">
+          <p>Username</p>
+          <p>date of birth</p>
+        </div>
+        <div class="small-6 cell">
+          {% csrf_token %}
+          <p>{{ user }}</p>
+          <p>{{ user_profile.dateOfBirth }}</p>
+        </div>
+      </div>
+
+      <form action="/profile/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="grid-x grid-padding-x">
+          {% for field in user_form %}
+            <div class="small-5 cell">
+              <label class="text-right middle">{{ field.label }}</label>
+            </div>
+            <div class="small-6 cell">
+              {{ field }}
+            </div>
+          {% endfor %}
+          {% for field in profile_form %}
+            <div class="small-5 cell">
+              <label class="text-right middle">{{ field.label }}</label>
+            </div>
+            <div class="small-6 cell">
+              {{ field }}
+            </div>
+          {% endfor %}
+        </div>
+        <button type="submit" class="hollow button" id="update-button">update</button>
+      </form>
+    </div>
+  {% else %}
+    <h5>Welcome to SNS</h5>
+  {% endif%}
+{% endblock %}
+{% block sidebar%}
+  {% include "snsApp/sidebar.html" %}
+{% endblock %}

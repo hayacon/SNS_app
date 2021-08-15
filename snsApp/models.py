@@ -16,8 +16,8 @@ class AppUser(models.Model):
 # model for each post
 class Post(models.Model):
     postId = models.AutoField(primary_key=True)
-    userId = models.ForeignKey(AppUser, on_delete=models.DO_NOTHING)
-    postDate = models.DateField()
+    userId = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    postDate = models.DateField(null=True)
     text = models.CharField(max_length=500)
-    likes = models.IntegerField()
+    likes = models.IntegerField(null=True)
     media = models.ImageField(upload_to='images_post')

@@ -1,12 +1,10 @@
-{% extends "./home_base.html" %}
-{% block sidebar %}
-  {% if user.is_authenticated %}
+{% if user.is_authenticated %}
     <div class="sidebar">
       <div class="sidebar-profile" id="sidebar-profile-img">
         {% if user_profile.profileImage %}
           <a href="#"><img class="thumbnail" src="{{ img_url }}" alt="User profile image"></a>
         {% else %}
-          <a href="#"><img class="thumbnail" src="/static/media/blank.png" alt="Defalut preofile image"></a>
+          <a href="/user_home"><img class="thumbnail" src="/static/media/blank.png" alt="Defalut preofile image"></a>
         {% endif %}
       </div>
       <div class="sidebar-profile" id="sidebar-profile-user">
@@ -24,4 +22,3 @@
       <p>Don't have an account? <a id="register-nav" href="/signup">sign up now!</a></p>
     </div>
   {% endif %}
-{% endblock %}

@@ -1,5 +1,8 @@
 {% extends "./register_base.html" %}
 {% block content %}
+  {% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
 
   <div class="callout large" id="register-form">
     SNS logo comes here....

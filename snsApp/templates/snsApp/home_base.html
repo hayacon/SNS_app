@@ -3,12 +3,14 @@
   {% include "./nav.html" %}
   <div class="grid-containor">
     <div class="grid-x grid-margin-x">
-      <div class="cell large-4"></div>
-      <div class="cell auto">
-        {% block content %} contents {% endblock %}
+      <div class="cell large-3"></div>
+      <div class="cell large-5">
+        {% block content %} {% endblock %}
       </div>
       <div class="cell auto">
-        {% block sidebar %}side bar{% endblock %}
+        {% block sidebar %}
+        {% include "snsApp/sidebar.html" %}
+        {% endblock %}
       </div>
     </div>
   </div>

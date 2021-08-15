@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from .models import *
 from .forms import *
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib.auth.decorators import login_required
+import os
+from datetime import datetime
 
 def register(request):
     registered = False
@@ -13,7 +15,6 @@ def register(request):
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(request.POST, request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
-        # if user_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.save()
@@ -26,7 +27,6 @@ def register(request):
         profile_form = UserProfileForm()
 
     return render(request, 'snsApp/signup.html', {'user_form': user_form, 'profile_form':profile_form, 'registered':registered})
-    # return render(request, 'snsApp/signup.html', {'user_form': user_form, 'registered':registered})
 
 def user_login(request):
     if request.method == 'POST':
@@ -51,9 +51,68 @@ def sidebar(request):
     user = request.user
     if user.is_authenticated:
         user_profile = AppUser.objects.get(user=user)
-        image_url = user_profile.profileImage.url
-        print(user)
-        print(user_profile.profileImage.url)
-        return render(request, "snsApp/sidebar.html", {'user':user, 'user_profile':user_profile, 'img_url':image_url})
+        if user_profile.profileImage:
+            image_url = user_profile.profileImage.url
+        else:
+            image_url = ''
+        return render(request, "snsApp/home_base.html", {'user':user, 'user_profile':user_profile, 'img_url':image_url})
     else:
-        return render(request, "snsApp/sidebar.html")
+        return render(request, "snsApp/home_base.html")
+
+@login_required
+def user_profile(request):
+    user = request.user
+    user_profile = AppUser.objects.get(user=user)
+    if user_profile.profileImage:
+        image_url = user_profile.profileImage.url
+        old_image_url = user_profile.profileImage.path
+    else:
+        image_url= None
+        old_image_url = None
+    if user.is_authenticated:
+        if request.method == "POST":
+            print("old : ", old_image_url)
+            user_form = UserFormUpdate(request.POST or None, instance=user)
+            user_profile_form = UserProfileFormUpdate(request.POST or None, request.FILES, instance=user_profile, initial={ "ocupation":user_profile.ocupation, "organization":user_profile.organization})
+            if user_form.is_valid() and user_profile_form.is_valid():
+                user_form.save()
+                if user_profile.profileImage:
+                    new_image_url = user_profile.profileImage.path
+                    print("new : ", new_image_url)
+                    if old_image_url==new_image_url:
+                        user_profile_form.save()
+                    elif old_image_url==None:
+                        user_profile_form.save()
+                    else:
+                        os.remove(old_image_url)
+                        user_profile_form.save()
+                else:
+                    user_profile_form.save()
+                return HttpResponseRedirect('/profile')
+        else:
+            user_form = UserFormUpdate(instance=user)
+            user_profile_form = UserProfileFormUpdate(instance=user_profile)
+    else:
+        return HttpResponseRedirect('/login')
+
+    return render(request, "snsApp/user_profile.html", {"user":user, "user_profile":user_profile, "img_url":image_url, "user_form":user_form, "profile_form":user_profile_form})
+
+@login_required
+def user_home(request):
+    user = request.user
+    print('1')
+    if user.is_authenticated:
+        print('2')
+        user_profile = AppUser.objects.get(user=user)
+        print(user_profile.__dict__)
+        img_url = user_profile.profileImage.url
+        if request.method=="POST":
+            post_form = NewPostForm(request.POST, request.FILES)
+            if post_form.is_valid():
+                post_form.save(user=user, time=datetime.now())
+        else:
+            print('else')
+            post_form = NewPostForm()
+    else:
+        return HttpResponseRedirect('/login')
+    return render(request, "snsApp/user_home.html", {"user_profile":user_profile, "img_url":img_url, "post_form":post_form})
