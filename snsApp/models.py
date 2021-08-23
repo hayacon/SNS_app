@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # model for application user which is extended from django user model
 class AppUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     profileImage = models.ImageField(upload_to='images_profile', null=True, blank=True)
     dateOfBirth = models.DateField(null=True, blank=True)
     ocupation = models.CharField(max_length=60, null=True, blank=True)
@@ -16,8 +16,12 @@ class AppUser(models.Model):
 # model for each post
 class Post(models.Model):
     postId = models.AutoField(primary_key=True)
-    userId = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    userId = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='posts')
     postDate = models.DateField(null=True)
     text = models.CharField(max_length=500)
     likes = models.IntegerField(null=True)
     media = models.ImageField(upload_to='images_post')
+
+class Friends(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='userOf')
+    friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_friend')

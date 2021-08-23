@@ -52,6 +52,7 @@ body {
   color: #0093f5;
 }
 
+/* User home (user_home.html) stylesheet */
 .user-home-profile {
   display: inline-block;
   margin-top: 10px;
@@ -115,6 +116,19 @@ body {
   border: 1px solid gray;
   padding: 15px;
   text-align: center;
+}
+
+/* Search result (search_user.htnl) stylesheet */
+.search-result {
+  display: inline-block;
+}
+
+#search-result-img {
+  width: 80px;
+}
+
+#search-result-info {
+  width: 200px;
 }
 
 /* User profile (user_profile.html) stylesheet */

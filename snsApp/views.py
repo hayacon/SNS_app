@@ -100,19 +100,35 @@ def user_profile(request):
 @login_required
 def user_home(request):
     user = request.user
-    print('1')
     if user.is_authenticated:
-        print('2')
         user_profile = AppUser.objects.get(user=user)
-        print(user_profile.__dict__)
         img_url = user_profile.profileImage.url
         if request.method=="POST":
             post_form = NewPostForm(request.POST, request.FILES)
             if post_form.is_valid():
                 post_form.save(user=user, time=datetime.now())
         else:
-            print('else')
             post_form = NewPostForm()
     else:
         return HttpResponseRedirect('/login')
     return render(request, "snsApp/user_home.html", {"user_profile":user_profile, "img_url":img_url, "post_form":post_form})
+
+def search_user(request):
+    if request.method == "POST":
+        search = request.POST['user-search']
+        if search:
+            result=User.objects.filter(username__contains=search)
+            images = []
+            for user in result:
+                profile_result=AppUser.objects.get(user=user)
+                if profile_result.profileImage:
+                    profile_img = profile_result.profileImage.url
+                    images.append(profile_img)
+                else:
+                    images.append(None)
+            search_result = zip(result, images)
+            return render(request, "snsApp/search_user.html",{'search_result':search_result})
+        else:
+            return render(request, 'snsApp/search_user.html')
+    else:
+        return HttpResponseRedirect("/")

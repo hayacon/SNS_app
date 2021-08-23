@@ -4,12 +4,13 @@
       <li class="menu-text">SNS title</li>
     </ul>
   </div>
-  <div class="search-bar">
+  <form class="search-bar" method="POST" action="{% url 'search-user'%}">
+    {% csrf_token %}
     <ul class="menu">
-      <li><input type="search" placeholder="search"></li>
-      <li><button type="button" class="hollow button" id="search-button"><i class="fi-magnifying-glass"></i></button></li>
+      <li><input type="search" placeholder="search" name="user-search"></li>
+      <li><button type="submit" class="hollow button" id="search-button"><i class="fi-magnifying-glass"></i></button></li>
     </ul>
-  </div>
+  </form>
   <div class="top-bar-right">
     <ul class="menu" style="background: #FFFFFF;">
       {% if user.is_authenticated %}

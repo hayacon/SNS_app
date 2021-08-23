@@ -4,9 +4,13 @@
   <div class="grid-containor">
     <div class="grid-x grid-margin-x">
       <div class="cell large-2"></div>
-      <div class="large-8 cell" style="border-top:1px solid black;">
+      <div class="large-8 cell">
         <div class="user-home-profile" id="user-home-profile-img">
+          {% if img_url %}
             <img class="thumbnail" id="user-home-profile-thumbnail" src="{{ img_url }}" alt="user profile image">
+          {% else %}
+            <img class="thumbnail" id="user-home-profile-thumbnail" src="/static/media/blank.png" alt="user profile image">
+          {% endif %}
         </div>
         <div class="user-home-profile" id="user-home-profile-info">
           <h4 >{{ user }} <a href="/profile" class="hollow button" id="edit-profile-button">edit profile</a></h4>
