@@ -7,11 +7,11 @@ class AppUserAdmin(admin.ModelAdmin):
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display=('postId', 'userId', 'postDate', 'text', 'likes', 'media')
+    list_display=('postId', 'user', 'postDate', 'text', 'likes', 'media')
 
-class FriendsAdmin(admin.ModelAdmin):
+class FriendAdmin(admin.ModelAdmin):
     list_display=('user', 'friend')
 
 admin.site.register(AppUser, AppUserAdmin)
 admin.site.register(Post, PostAdmin)
-admin.site.register(Friends, FriendsAdmin)
+admin.site.register(Friend, FriendAdmin)

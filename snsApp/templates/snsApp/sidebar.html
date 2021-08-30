@@ -2,7 +2,7 @@
     <div class="sidebar">
       <div class="sidebar-profile" id="sidebar-profile-img">
         {% if user_profile.profileImage %}
-          <a href="#"><img class="thumbnail" src="{{ img_url }}" alt="User profile image"></a>
+          <a href="/user_home"><img class="thumbnail" src="{{ img_url }}" alt="User profile image"></a>
         {% else %}
           <a href="/user_home"><img class="thumbnail" src="/static/media/blank.png" alt="Defalut preofile image"></a>
         {% endif %}

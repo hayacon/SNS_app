@@ -1,0 +1,13 @@
+<div class="home-feed">
+  {% for post in posts %}
+  <div class="card" style='margin-top: 10px'>
+    {% if post.media %}
+    <img class="post-img" src="{{ post.media.url }}" >
+    {% endif %}
+    <div class="card-section">
+      <p> user : <a href="/{{ post.user }}">{{ post.user }}</a> </p>
+      <p>{{ post.text }} ({{ post.postDate }})</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>

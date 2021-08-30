@@ -7,7 +7,7 @@
   <form class="search-bar" method="POST" action="{% url 'search-user'%}">
     {% csrf_token %}
     <ul class="menu">
-      <li><input type="search" placeholder="search" name="user-search"></li>
+      <li><input type="search" placeholder="search" name="q"></li>
       <li><button type="submit" class="hollow button" id="search-button"><i class="fi-magnifying-glass"></i></button></li>
     </ul>
   </form>

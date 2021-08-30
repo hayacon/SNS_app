@@ -1,12 +1,19 @@
 from django.shortcuts import render
 from .models import *
 from .forms import *
+from .serializers import *
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import os
 from datetime import datetime
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework import status, generics, mixins
+from rest_framework.views import APIView
+
 
 def register(request):
     registered = False
@@ -47,18 +54,6 @@ def user_logout(request):
     logout(request)
     return render(request, "snsApp/logout.html")
 
-def sidebar(request):
-    user = request.user
-    if user.is_authenticated:
-        user_profile = AppUser.objects.get(user=user)
-        if user_profile.profileImage:
-            image_url = user_profile.profileImage.url
-        else:
-            image_url = ''
-        return render(request, "snsApp/home_base.html", {'user':user, 'user_profile':user_profile, 'img_url':image_url})
-    else:
-        return render(request, "snsApp/home_base.html")
-
 @login_required
 def user_profile(request):
     user = request.user
@@ -98,7 +93,7 @@ def user_profile(request):
     return render(request, "snsApp/user_profile.html", {"user":user, "user_profile":user_profile, "img_url":image_url, "user_form":user_form, "profile_form":user_profile_form})
 
 @login_required
-def user_home(request):
+def main_user_home(request):
     user = request.user
     if user.is_authenticated:
         user_profile = AppUser.objects.get(user=user)
@@ -111,14 +106,36 @@ def user_home(request):
             post_form = NewPostForm()
     else:
         return HttpResponseRedirect('/login')
-    return render(request, "snsApp/user_home.html", {"user_profile":user_profile, "img_url":img_url, "post_form":post_form})
+    posts=[]
+    post = Post.objects.filter(user=user).order_by('-postId')
+    for i in post:
+        posts.append(i)
+        
+    return render(request, "snsApp/user_home.html", {"user_profile":user_profile, "img_url":img_url, "post_form":post_form, "posts":posts})
 
-def search_user(request):
+
+
+class UserHome(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "snsApp/user.html"
+
+    def get(self, request, username):
+        queryset = User.objects.get(username=username)
+        user = UserSerializer(queryset)
+        if queryset.profile.profileImage:
+            img_url = user.data['profile']['profileImage']
+        else:
+            img_url = None
+        # print("data : ", user.data['posts'])
+        return Response({"user":queryset, "user_profile": user.data['profile'], "img_url": img_url, "posts":user.data['posts']})
+
+def user_search(request):
     if request.method == "POST":
-        search = request.POST['user-search']
+        search = request.POST['q']
         if search:
             result=User.objects.filter(username__contains=search)
             images = []
+            urls = []
             for user in result:
                 profile_result=AppUser.objects.get(user=user)
                 if profile_result.profileImage:
@@ -126,9 +143,26 @@ def search_user(request):
                     images.append(profile_img)
                 else:
                     images.append(None)
-            search_result = zip(result, images)
+                link = "/" + str(user)
+                urls.append(link)
+            search_result = zip(result, images, urls)
             return render(request, "snsApp/search_user.html",{'search_result':search_result})
         else:
             return render(request, 'snsApp/search_user.html')
     else:
         return HttpResponseRedirect("/")
+
+class PostView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'snsApp/home_base.html'
+
+    def get(self, request):
+        user = request.user
+        queryset = Post.objects.all().order_by('-postId')
+        if user.is_authenticated:
+            user_profile = AppUser.objects.get(user=user)
+            if user_profile.profileImage:
+                image_url = user_profile.profileImage.url
+            else:
+                image_url = ''
+        return Response({'posts':queryset, 'user_profile':user_profile, 'img_url':image_url, 'user':user})

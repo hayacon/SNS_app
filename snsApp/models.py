@@ -16,12 +16,12 @@ class AppUser(models.Model):
 # model for each post
 class Post(models.Model):
     postId = models.AutoField(primary_key=True)
-    userId = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='posts')
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='posts')
     postDate = models.DateField(null=True)
     text = models.CharField(max_length=500)
     likes = models.IntegerField(null=True)
     media = models.ImageField(upload_to='images_post')
 
-class Friends(models.Model):
+class Friend(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='userOf')
     friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_friend')

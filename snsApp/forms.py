@@ -51,10 +51,10 @@ class UserProfileFormUpdate(forms.ModelForm):
 class NewPostForm(forms.Form):
     text = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder':'what you reckon?'}), label='', help_text="word limit : 500")
     media = forms.ImageField(label="image", required=False)
-    userId = forms.CharField(widget=forms.HiddenInput(), required=False)
+    user = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def save(self, user, time):
         text = self.cleaned_data['text']
         media = self.cleaned_data['media']
-        post = Post(userId=user, postDate=time, text=text,likes=0, media=media,)
+        post = Post(user=user, postDate=time, text=text,likes=0, media=media,)
         post.save()
