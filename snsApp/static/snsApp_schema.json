@@ -1,0 +1,319 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "",
+    "version": ""
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "listPosts",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "array",
+                  "items": {}
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          ""
+        ]
+      }
+    },
+    "/{username}/": {
+      "get": {
+        "operationId": "retrieveUserHome",
+        "description": "",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/html": {
+                "schema": {}
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "{username}"
+        ]
+      }
+    },
+    "/api/user/{username}/": {
+      "get": {
+        "operationId": "retrieveUser",
+        "description": "",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    },
+    "/api/posts/{id}/": {
+      "get": {
+        "operationId": "retrievePost",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    },
+    "/api/post/": {
+      "get": {
+        "operationId": "listPosts",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Post"
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      },
+      "post": {
+        "operationId": "createPost",
+        "description": "",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+            "pattern": "^[\\w.@+-]+\\z",
+            "maxLength": 150
+          },
+          "first_name": {
+            "type": "string",
+            "maxLength": 150
+          },
+          "last_name": {
+            "type": "string",
+            "maxLength": 150
+          },
+          "profile": {
+            "type": "object",
+            "properties": {
+              "profileImage": {
+                "type": "string",
+                "format": "binary",
+                "nullable": true
+              },
+              "dateOfBirth": {
+                "type": "string",
+                "format": "date",
+                "nullable": true
+              },
+              "ocupation": {
+                "type": "string",
+                "nullable": true,
+                "maxLength": 60
+              },
+              "organization": {
+                "type": "string",
+                "nullable": true,
+                "maxLength": 100
+              },
+              "bio": {
+                "type": "string",
+                "nullable": true,
+                "maxLength": 400
+              }
+            },
+            "readOnly": true
+          },
+          "posts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "postId": {
+                  "type": "integer",
+                  "readOnly": true
+                },
+                "user": {
+                  "type": "integer"
+                },
+                "postDate": {
+                  "type": "string",
+                  "format": "date",
+                  "nullable": true
+                },
+                "text": {
+                  "type": "string",
+                  "maxLength": 500
+                },
+                "media": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "likes": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "required": [
+                "user",
+                "text",
+                "media"
+              ]
+            },
+            "readOnly": true
+          }
+        },
+        "required": [
+          "username"
+        ]
+      },
+      "Post": {
+        "type": "object",
+        "properties": {
+          "postId": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "user": {
+            "type": "integer"
+          },
+          "postDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "media": {
+            "type": "string",
+            "format": "binary"
+          },
+          "likes": {
+            "type": "integer",
+            "nullable": true
+          }
+        },
+        "required": [
+          "user",
+          "text",
+          "media"
+        ]
+      }
+    }
+  }
+}
