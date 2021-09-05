@@ -22,6 +22,6 @@ class Post(models.Model):
     likes = models.IntegerField(null=True)
     media = models.ImageField(upload_to='images_post')
 
-class Friend(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='userOf')
-    friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_friend')
+class Follower(models.Model):
+    user = models.CharField(max_length=200)
+    follower = models.CharField(max_length=200)

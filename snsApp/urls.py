@@ -11,6 +11,7 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('profile/', views.user_profile, name='user_profile'),
     path('user_home/', views.main_user_home, name='main_user_home'),
+    path('friend_list/', views.network_list, name='network_list'),
     path('<str:username>/', views.UserHome.as_view(), name='user_home'),
     path('search_user', views.user_search, name='search-user'),
     path('api/user/<str:username>/', api.UserList.as_view(), name='user-list'),

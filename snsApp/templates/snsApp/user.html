@@ -13,9 +13,25 @@
           {% endif %}
         </div>
         <div class="user-home-profile" id="user-home-profile-info">
-          <h4 >{{ user }}</h4>
-          <p> {{ user.first_name}} {{ user.last_name}}</p>
+          <h4 >{{ subuser }}</h4>
+          <p> {{ subuser.first_name}} {{ subuser.last_name}}</p>
           <p>{{ user_profile.bio }}</p>
+          <p>{{ follower_count }} Followers &nbsp;&nbsp;&nbsp;{{ following_count }} Following</p>
+          {% if following %}
+            <form class="follow" action="/{{ subuser }}/" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="user" value="{{ subuser }}">
+              <input type="hidden" name="follower" value="{{ user }}">
+              <button type="submit" name="button" class="hollow button success">Following <i class="fi-check"></i></button>
+            </form>
+          {% else %}
+            <form class="follow" action="/{{ subuser }}/" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="user" value="{{ subuser }}">
+              <input type="hidden" name="follower" value="{{ user }}">
+              <button type="submit" name="button" class="hollow button primary">Follow <i class="fi-plus"></i></button>
+            </form>
+          {% endif %}
         </div>
       </div>
       <div class="cell auto"></div>
@@ -32,6 +48,7 @@
           {% endif %}
           <div class="card-section">
             <p>{{ post.text }} ({{ post.postDate }})</p>
+            <p><i class="fi-heart"></i> x likes</p>
           </div>
         </div>
         {% endfor %}

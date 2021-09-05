@@ -104,30 +104,69 @@ def main_user_home(request):
                 post_form.save(user=user, time=datetime.now())
         else:
             post_form = NewPostForm()
+
+        #get all user's post
+        #try use serializer
+        posts=[]
+        post = Post.objects.filter(user=user).order_by('-postId')
+        for i in post:
+            posts.append(i)
+
+        #get a count of user's followers and followings
+        follower_count = Follower.objects.filter(user=request.user).count()
+        following_count = Follower.objects.filter(follower=request.user).count()
+
     else:
         return HttpResponseRedirect('/login')
-    posts=[]
-    post = Post.objects.filter(user=user).order_by('-postId')
-    for i in post:
-        posts.append(i)
-        
-    return render(request, "snsApp/user_home.html", {"user_profile":user_profile, "img_url":img_url, "post_form":post_form, "posts":posts})
 
-
+    return render(request, "snsApp/user_home.html", {"user_profile":user_profile, "img_url":img_url, "post_form":post_form, "posts":posts, "follower_count":follower_count, "following_count":following_count})
 
 class UserHome(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "snsApp/user.html"
 
     def get(self, request, username):
+        if Follower.objects.filter(user=username, follower=request.user):
+            following=True
+        else:
+            following=False
+
         queryset = User.objects.get(username=username)
         user = UserSerializer(queryset)
         if queryset.profile.profileImage:
             img_url = user.data['profile']['profileImage']
         else:
             img_url = None
-        # print("data : ", user.data['posts'])
-        return Response({"user":queryset, "user_profile": user.data['profile'], "img_url": img_url, "posts":user.data['posts']})
+
+        follower_count = Follower.objects.filter(user=username).count()
+        following_count = Follower.objects.filter(follower=username).count()
+
+        return Response({"subuser":queryset, "user_profile": user.data['profile'], "img_url": img_url, "posts":user.data['posts'], "following":following, "follower_count":follower_count, "following_count":following_count})
+
+    def post(self, request, username):
+        queryset = User.objects.get(username=username)
+        user = UserSerializer(queryset)
+        if queryset.profile.profileImage:
+            img_url = user.data['profile']['profileImage']
+        else:
+            img_url = None
+
+        follower_count = Follower.objects.filter(user=username).count()
+        following_count = Follower.objects.filter(follower=username).count()
+
+        if request.method=="POST":
+            if Follower.objects.filter(user=username, follower=request.user):
+                Follower.objects.filter(user=request.data['user'], follower=request.user).delete()
+                following=False
+            else:
+                post_query = Follower.objects.all()
+                follower_serializer = FollowerSerializer(data=request.data)
+                print("data : ", request.data)
+                if follower_serializer.is_valid():
+                    follower_serializer.save()
+                    following=True
+
+        return Response({"subuser":queryset, "user_profile": user.data['profile'], "img_url": img_url, "posts":user.data['posts'],"following":following, "follower_count":follower_count, "following_count":following_count})
 
 def user_search(request):
     if request.method == "POST":
@@ -135,7 +174,7 @@ def user_search(request):
         if search:
             result=User.objects.filter(username__contains=search)
             images = []
-            urls = []
+            # urls = []
             for user in result:
                 profile_result=AppUser.objects.get(user=user)
                 if profile_result.profileImage:
@@ -143,14 +182,30 @@ def user_search(request):
                     images.append(profile_img)
                 else:
                     images.append(None)
-                link = "/" + str(user)
-                urls.append(link)
-            search_result = zip(result, images, urls)
+                # link = "/" + str(user)
+                # urls.append(link)
+            search_result = zip(result, images)
             return render(request, "snsApp/search_user.html",{'search_result':search_result})
         else:
             return render(request, 'snsApp/search_user.html')
     else:
         return HttpResponseRedirect("/")
+
+def network_list(request):
+    if request.method == "GET":
+        #get a list and count of user's followers and followings
+        follower_list=[]
+        followers = Follower.objects.filter(user=request.user)
+        for user in followers:
+            follower_list.append(user)
+
+        following_list=[]
+        followings = Follower.objects.filter(follower=request.user)
+        for user in followings:
+            following_list.append(user)
+        return render(request, "snsApp/network.html", {"follower_list":follower_list, "following_list":following_list})
+    else:
+        return HttpResponseRedirect("user_home/")
 
 class PostView(APIView):
     renderer_classes = [TemplateHTMLRenderer]

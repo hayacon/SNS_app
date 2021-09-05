@@ -16,8 +16,11 @@
           <h4 >{{ user }} <a href="/profile" class="hollow button" id="edit-profile-button">edit profile</a></h4>
           <p> {{ user.first_name}} {{ user.last_name}}</p>
           <p>{{ user_profile.bio }}</p>
+          <p>{{ follower_count}} &nbsp;<a href="/friend_list/">Followers</a>&nbsp;&nbsp;&nbsp;
+          {{ following_count }} &nbsp;<a href="/friend_list/">Following</a></p>
           <a href="#" class='button' onclick="overlay()" id="create-post-button">create new post</a>
         </div>
+
         <div id="overlay">
           <div class="callout">
             <form action="/user_home/" method="post" enctype="multipart/form-data">
@@ -31,15 +34,16 @@
       </div>
       <div class="grid-containor">
         <div class="grid-x grid-margin-x">
-          <div class="cell large-3"></div>
-          <div class="large-5 cell">
+          <div class="cell large-6"></div>
+          <div class="large-6 cell">
             {% for post in posts %}
             <div class="card">
               {% if post.media %}
-              <img class="post-img" src="{{ post.media }}" >
+              <img class="post-img" src="{{ post.media.url }}" >
               {% endif %}
               <div class="card-section">
                 <p>{{ post.text }} ({{ post.postDate }})</p>
+                <p><i class="fi-heart"></i> 1M likes</p>
               </div>
             </div>
             {% endfor %}

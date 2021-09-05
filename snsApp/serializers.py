@@ -23,3 +23,8 @@ class UserPostSerialzer(serializers.ModelSerializer):
     class Meta:
         model=User
         fields = ['username', 'posts']
+
+class FollowerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Follower
+        fields=['user', 'follower']

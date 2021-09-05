@@ -6,7 +6,7 @@
       <div class="cell large-3"></div>
       <div class="cell large-7">
         <h5 style="margin-bottom:50px;">search result....</h5>
-        {% for user, img, urls in search_result %}
+        {% for user, img in search_result %}
               <div class="search-result" id="search-result-img">
                 {% if img %}
                   <a href="{{ urls }}"><img src="{{ img }}" class="thumbnail"</a>
@@ -15,7 +15,7 @@
                 {% endif %}
               </div>
               <div class="search-result" id="search-result-info">
-                <a href="{{ urls }}"> {{ user }}</a>
+                <a href="/{{ user }}/"> {{ user }}</a>
                 <p>{{ user.first_name }} {{ user.last_name }}</p>
               </div>
         {% endfor %}

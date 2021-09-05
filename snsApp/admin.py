@@ -9,9 +9,9 @@ class AppUserAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     list_display=('postId', 'user', 'postDate', 'text', 'likes', 'media')
 
-class FriendAdmin(admin.ModelAdmin):
-    list_display=('user', 'friend')
+class FollowerAdmin(admin.ModelAdmin):
+    list_display=('user', 'follower')
 
 admin.site.register(AppUser, AppUserAdmin)
 admin.site.register(Post, PostAdmin)
-admin.site.register(Friend, FriendAdmin)
+admin.site.register(Follower, FollowerAdmin)
