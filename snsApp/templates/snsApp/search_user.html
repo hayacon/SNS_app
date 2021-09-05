@@ -9,9 +9,9 @@
         {% for user, img in search_result %}
               <div class="search-result" id="search-result-img">
                 {% if img %}
-                  <a href="{{ urls }}"><img src="{{ img }}" class="thumbnail"</a>
+                  <a href="{{ user }}"><img src="{{ img }}" class="thumbnail"</a>
                 {% else %}
-                  <a href="{{ urls }}"><img src="/static/media/blank.png" class="thumbnail"></a>
+                  <a href="{{ user }}"><img src="/static/media/blank.png" class="thumbnail"></a>
                 {% endif %}
               </div>
               <div class="search-result" id="search-result-info">

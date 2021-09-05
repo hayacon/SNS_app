@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'rest_framework',
+    'channels',
     'snsApp.apps.SnsappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -74,6 +75,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'SNS.wsgi.application'
+ASGI_APPLICATION = 'SNS.routing.application'
+
 
 # rest framework settings
 REST_FRAMEWORK = {
@@ -142,3 +145,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CHANNEL_LAYERS = {
+    'default' : {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG' : {
+            'hosts' : [('127.0.0.1', 6379)]
+        }
+    }
+}

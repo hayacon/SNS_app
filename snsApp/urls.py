@@ -14,9 +14,10 @@ urlpatterns = [
     path('friend_list/', views.network_list, name='network_list'),
     path('<str:username>/', views.UserHome.as_view(), name='user_home'),
     path('search_user', views.user_search, name='search-user'),
+    path('chat/<str:room_name>/', views.chat_room, name='chat-room'),
     path('api/user/<str:username>/', api.UserList.as_view(), name='user-list'),
     path('api/posts/<int:pk>/', api.PostsList.as_view(), name='post'),
-    path('api/post/', api.NewPostList.as_view(), name='new_post')
+    path('api/post/', api.NewPostList.as_view(), name='new_post'),
 ]
 
 # urlpatterns += static(settings.STATIC_URL)

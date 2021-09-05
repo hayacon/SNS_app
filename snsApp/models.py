@@ -25,3 +25,4 @@ class Post(models.Model):
 class Follower(models.Model):
     user = models.CharField(max_length=200)
     follower = models.CharField(max_length=200)
+    chat_room = models.CharField(max_length=100, null=True)

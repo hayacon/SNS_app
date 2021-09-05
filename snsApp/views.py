@@ -57,14 +57,15 @@ def user_logout(request):
 @login_required
 def user_profile(request):
     user = request.user
-    user_profile = AppUser.objects.get(user=user)
-    if user_profile.profileImage:
-        image_url = user_profile.profileImage.url
-        old_image_url = user_profile.profileImage.path
-    else:
-        image_url= None
-        old_image_url = None
     if user.is_authenticated:
+        user_profile = AppUser.objects.get(user=user)
+        if user_profile.profileImage:
+            image_url = user_profile.profileImage.url
+            old_image_url = user_profile.profileImage.path
+        else:
+            image_url= None
+            old_image_url = None
+
         if request.method == "POST":
             print("old : ", old_image_url)
             user_form = UserFormUpdate(request.POST or None, instance=user)
@@ -160,10 +161,16 @@ class UserHome(APIView):
                 following=False
             else:
                 post_query = Follower.objects.all()
+                room_name =''
                 follower_serializer = FollowerSerializer(data=request.data)
                 print("data : ", request.data)
+                if Follower.objects.filter(user=request.user, follower=username):
+                    room_name = Follower.objects.get(user=request.user, follower=username).chat_room
+                else:
+                    room_name = str(request.user) + '_' + str(username)
+                    room_name = str(room_name)
                 if follower_serializer.is_valid():
-                    follower_serializer.save()
+                    follower_serializer.save(chat_room=room_name)
                     following=True
 
         return Response({"subuser":queryset, "user_profile": user.data['profile'], "img_url": img_url, "posts":user.data['posts'],"following":following, "follower_count":follower_count, "following_count":following_count})
@@ -216,8 +223,25 @@ class PostView(APIView):
         queryset = Post.objects.all().order_by('-postId')
         if user.is_authenticated:
             user_profile = AppUser.objects.get(user=user)
+            following_list=[]
+            followings = Follower.objects.filter(follower=request.user)
+            for following in followings:
+                following_list.append(following)
             if user_profile.profileImage:
                 image_url = user_profile.profileImage.url
             else:
                 image_url = ''
-        return Response({'posts':queryset, 'user_profile':user_profile, 'img_url':image_url, 'user':user})
+
+        return Response({'posts':queryset, 'user_profile':user_profile, 'img_url':image_url, 'user':user,'following_list':following_list})
+
+def chat_room(request, room_name):
+    user_profile = AppUser.objects.get(user=request.user)
+    if user_profile.profileImage:
+        image_url = user_profile.profileImage.url
+    else:
+        image_url = ''
+    following_list=[]
+    followings = Follower.objects.filter(follower=request.user)
+    for following in followings:
+        following_list.append(following)
+    return render(request, "snsApp/chat_room.html", {'room_name':room_name, 'user_profile':user_profile,'img_url':image_url,'following_list':following_list})
