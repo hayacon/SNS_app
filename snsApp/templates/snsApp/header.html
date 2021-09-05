@@ -11,9 +11,11 @@
   <link rel ="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css">
   <!-- Foundation  JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
+  {% load static %}
   <!-- General style sheet -->
-  <link rel="stylesheet" type="text/css" href="../static/css/stylesheet.css" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/stylesheet.css' %}" />
   <!-- General JavaScript  -->
-  <script type="text/javascript" src="../static/js/index.js"></script>
-  <link rel="icon" href="../static/img/favicon.ico">
+  <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+  <link rel="icon" href="{% static 'img/favicon.ico' %}">
+
 </head>

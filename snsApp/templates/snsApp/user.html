@@ -44,7 +44,7 @@
         {% for post in posts reversed %}
         <div class="card">
           {% if post.media %}
-          <img class="post-img" src="{{ post.media.url }}" >
+          <img class="post-img" src="{{ post.media }}" >
           {% endif %}
           <div class="card-section">
             <p>{{ post.text }} ({{ post.postDate }})</p>

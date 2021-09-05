@@ -108,10 +108,10 @@ def main_user_home(request):
 
         #get all user's post
         #try use serializer
-        posts=[]
+        # posts=[]
         post = Post.objects.filter(user=user).order_by('-postId')
-        for i in post:
-            posts.append(i)
+        # for i in post:
+        #     posts.append(i)
 
         #get a count of user's followers and followings
         follower_count = Follower.objects.filter(user=request.user).count()
@@ -120,7 +120,7 @@ def main_user_home(request):
     else:
         return HttpResponseRedirect('/login')
 
-    return render(request, "snsApp/user_home.html", {"user_profile":user_profile, "img_url":img_url, "post_form":post_form, "posts":posts, "follower_count":follower_count, "following_count":following_count})
+    return render(request, "snsApp/user_home.html", {"user_profile":user_profile, "img_url":img_url, "post_form":post_form, "posts":post, "follower_count":follower_count, "following_count":following_count})
 
 class UserHome(APIView):
     renderer_classes = [TemplateHTMLRenderer]
@@ -244,4 +244,5 @@ def chat_room(request, room_name):
     followings = Follower.objects.filter(follower=request.user)
     for following in followings:
         following_list.append(following)
-    return render(request, "snsApp/chat_room.html", {'room_name':room_name, 'user_profile':user_profile,'img_url':image_url,'following_list':following_list})
+    username = str(request.user)
+    return render(request, "snsApp/chat_room.html", {'room_name':room_name, "username":username, 'user_profile':user_profile,'img_url':image_url,'following_list':following_list})
