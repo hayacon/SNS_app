@@ -2,7 +2,7 @@ import factory
 from django.test import TestCase
 from django.conf import settings
 from django.core.files import File
-from .models import *
+from ..models import *
 from random import randint,choice
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -27,7 +27,7 @@ class AppUserFactory(factory.django.DjangoModelFactory):
 
 class PostFactory(factory.django.DjangoModelFactory):
     postId = 5
-    userId = factory.SubFactory(UserFactory)
+    user = factory.SubFactory(UserFactory)
     postDate = "2020-03-20"
     text = "hello world"
     likes = 10
@@ -36,9 +36,10 @@ class PostFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Post
 
-class FriendsFactory(factory.django.DjangoModelFactory):
-    user = factory.SubFactory(UserFactory)
-    friend = factory.SubFactory(UserFactory)
+class FollowerFactory(factory.django.DjangoModelFactory):
+    user = 'factory'
+    follower = 'follower'
+    chat_room = 'room101'
 
     class Meta:
-        model = Friends
+        model = Follower

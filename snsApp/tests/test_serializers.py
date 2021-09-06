@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from rest_framework.test import APIRequestFactory
 from rest_framework.test import APITestCase
 from .model_factories import *
-from .serializers import *
+from ..serializers import *
 
 # Serializers test
 class AppUserSerializerTest(APITestCase):
@@ -20,11 +20,11 @@ class AppUserSerializerTest(APITestCase):
         User.objects.all().delete()
         AppUser.objects.all().delete()
         Post.objects.all().delete()
-        Friends.objects.all().delete()
+        Follower.objects.all().delete()
         UserFactory.reset_sequence()
         AppUserFactory.reset_sequence()
         PostFactory.reset_sequence()
-        FriendsFactory.reset_sequence()
+        FollowerFactory.reset_sequence()
 
     def test_appUserSerializerHasCorrectFields(self):
         data = self.appuserserializer.data
@@ -42,15 +42,15 @@ class PostSerializerTest(APITestCase):
         User.objects.all().delete()
         AppUser.objects.all().delete()
         Post.objects.all().delete()
-        Friends.objects.all().delete()
+        Follower.objects.all().delete()
         UserFactory.reset_sequence()
         AppUserFactory.reset_sequence()
         PostFactory.reset_sequence()
-        FriendsFactory.reset_sequence()
+        FollowerFactory.reset_sequence()
 
     def test_postSerializerHasCorrectFields(self):
         data = self.postserializer.data
-        self.assertEqual(set(data.keys()), set(['postId', 'userId', 'postDate', 'text', 'media', 'likes']))
+        self.assertEqual(set(data.keys()), set(['postId', 'user', 'postDate', 'text', 'media', 'likes']))
 
 class UserSerializerTest(APITestCase):
     user = None
@@ -64,15 +64,15 @@ class UserSerializerTest(APITestCase):
         User.objects.all().delete()
         AppUser.objects.all().delete()
         Post.objects.all().delete()
-        Friends.objects.all().delete()
+        Follower.objects.all().delete()
         UserFactory.reset_sequence()
         AppUserFactory.reset_sequence()
         PostFactory.reset_sequence()
-        FriendsFactory.reset_sequence()
+        FollowerFactory.reset_sequence()
 
     def test_userSerializerHasCorrectFiedls(self):
         data = self.userserializer.data
-        self.assertEqual(set(data.keys()), set(['username', 'first_name', 'last_name','profile']))
+        self.assertEqual(set(data.keys()), set(['username', 'first_name', 'last_name','profile','posts']))
 
 class UserPostSerialzerTest(APITestCase):
     user = None
@@ -86,14 +86,33 @@ class UserPostSerialzerTest(APITestCase):
         User.objects.all().delete()
         AppUser.objects.all().delete()
         Post.objects.all().delete()
-        Friends.objects.all().delete()
+        Follower.objects.all().delete()
         UserFactory.reset_sequence()
         AppUserFactory.reset_sequence()
         PostFactory.reset_sequence()
-        FriendsFactory.reset_sequence()
+        FollowerFactory.reset_sequence()
 
     def test_userPostSerializerHasCorrectFields(self):
         data = self.userpostserializer.data
         self.assertEqual(set(data.keys()), set(['username', 'posts']))
+class FollowerSerializerTest(APITestCase):
+    follower = None
+    followerserializer = None
 
-# API endpoint test
+    def setUp(self):
+        self.follower = FollowerFactory.create()
+        self.followerserializer = FollowerSerializer(instance=self.follower)
+
+    def tearDown(self):
+        User.objects.all().delete()
+        AppUser.objects.all().delete()
+        Post.objects.all().delete()
+        Follower.objects.all().delete()
+        UserFactory.reset_sequence()
+        AppUserFactory.reset_sequence()
+        PostFactory.reset_sequence()
+        FollowerFactory.reset_sequence()
+
+    def test_followerSerializerHasCorrectFields(self):
+        data = self.followerserializer.data
+        self.assertEqual(set(data.keys()), set(['user', 'follower', 'chat_room']))
