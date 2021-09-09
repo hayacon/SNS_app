@@ -233,9 +233,11 @@ class PostView(APIView):
             if user_profile.profileImage:
                 image_url = user_profile.profileImage.url
             else:
-                image_url = ''
+                image_url = None
 
-        return Response({'posts':queryset, 'user_profile':user_profile, 'img_url':image_url, 'user':user,'following_list':following_list})
+            return Response({'posts':queryset, 'user_profile':user_profile, 'img_url':image_url, 'user':user,'following_list':following_list})
+
+        return Response({'posts':queryset, 'user_profile':None, 'img_url':None, 'user':user,'following_list':None})
 
 def chat_room(request, room_name):
     user_profile = AppUser.objects.get(user=request.user)
