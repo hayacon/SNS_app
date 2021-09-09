@@ -138,7 +138,7 @@ STATIC_ROOT = 'SNS/snsApp/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Default primary key field type
@@ -154,3 +154,7 @@ CHANNEL_LAYERS = {
         }
     }
 }
+
+#Test setting
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = ['--with-spec', '--spec-color']

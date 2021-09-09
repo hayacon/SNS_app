@@ -98,7 +98,10 @@ def main_user_home(request):
     user = request.user
     if user.is_authenticated:
         user_profile = AppUser.objects.get(user=user)
-        img_url = user_profile.profileImage.url
+        if user_profile.profileImage:
+            img_url = user_profile.profileImage.url
+        else:
+            img_url = None
         if request.method=="POST":
             post_form = NewPostForm(request.POST, request.FILES)
             if post_form.is_valid():

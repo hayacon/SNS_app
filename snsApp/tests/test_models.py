@@ -1,7 +1,4 @@
-import json
 from django.test import TestCase
-from django.urls import reverse
-from django.urls import reverse_lazy
 from .model_factories import *
 from ..models import *
 
@@ -22,13 +19,14 @@ class AppUserModelTest(TestCase):
         FollowerFactory.reset_sequence()
 
 #fix this test
-    # def create_AppUser(self, user=User.objects.get(username='a'), profileImage='abc.jpeg', dateOfBirth='08/09/1997', ocupation='teacher', organization='UoL', bio="hello world"):
-    #     return AppUser.objects.create(user=user, profileImage=profileImage, dateOfBirth=dateOfBirth, ocupation=ocupation, organization=organization,bio=bio)
-    #
-    # def test_appUserModelCreation(self):
-    #     #test objects creation of Model
-    #     appUserModel = self.create_AppUser()
-    #     self.assertTrue(appUserModel, AppUser)
+    def create_AppUser(self, profileImage='abc.jpeg', dateOfBirth='1997-08-10', ocupation='teacher', organization='UoL', bio="hello world"):
+        user = User.objects.create(username='user_a')
+        return AppUser.objects.create(user=user, profileImage=profileImage, dateOfBirth=dateOfBirth, ocupation=ocupation, organization=organization,bio=bio)
+
+    def test_appUserModelCreation(self):
+        #test objects creation of Model
+        appUserModel = self.create_AppUser()
+        self.assertTrue(appUserModel, AppUser)
 
     def test_ocupationFieldMaxLength(self):
         #test max_length of 'ocupation' field
@@ -65,6 +63,19 @@ class PostModelTest(TestCase):
         AppUserFactory.reset_sequence()
         PostFactory.reset_sequence()
         FollowerFactory.reset_sequence()
+
+    def createPost(self, postId='10', postDate="2021-9-5", text="hello world", likes="300", media="/hello.jpeg"):
+        user = User.objects.create(username="user_a")
+        return Post.objects.create(postId=postId, user=user, postDate=postDate, text=text, likes=likes, media=media)
+
+    def test_postModelCreation(self):
+        post_objects = self.createPost()
+        self.assertTrue(isinstance(post_objects, Post))
+
+    def test_testFieldMaxLength(self):
+        post = Post.objects.get(postId=5)
+        max_length = post._meta.get_field('text').max_length
+        self.assertEqual(max_length, 500)
 
 
 #Unit test for follower model

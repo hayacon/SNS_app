@@ -9,15 +9,15 @@ urlpatterns = [
     path('signup/', views.register, name='signup' ),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
-    path('profile/', views.user_profile, name='user_profile'),
-    path('user_home/', views.main_user_home, name='main_user_home'),
-    path('friend_list/', views.network_list, name='network_list'),
-    path('<str:username>/', views.UserHome.as_view(), name='user_home'),
+    path('profile/', views.user_profile, name='user-profile'),
+    path('user_home/', views.main_user_home, name='main-user-home'),
+    path('friend_list/', views.network_list, name='network-list'),
+    path('<str:username>/', views.UserHome.as_view(), name='user-home'),
     path('search_user', views.user_search, name='search-user'),
     path('chat/<str:room_name>/', views.chat_room, name='chat-room'),
     path('api/user/<str:username>/', api.UserList.as_view(), name='user-list'),
     path('api/posts/<int:pk>/', api.PostsList.as_view(), name='post'),
-    path('api/post/', api.NewPostList.as_view(), name='new_post'),
+    path('api/post/', api.NewPostList.as_view(), name='new-post'),
 ]
 
 # urlpatterns += static(settings.STATIC_URL)

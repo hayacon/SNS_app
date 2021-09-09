@@ -22,12 +22,12 @@ class PostsList(generics.ListAPIView):
         postId = self.kwargs['pk']
         return Post.objects.filter(postId=postId)
 
-class UserPostList(generics.ListAPIView):
-    serializer_class = UserPostSerialzer
-
-    def get_queryset(self):
-        username = self.kwargs['username']
-        return User.objects.filter(username=username)
+# class UserPostList(generics.ListAPIView):
+#     serializer_class = UserPostSerialzer
+#
+#     def get_queryset(self):
+#         username = self.kwargs['username']
+#         return User.objects.filter(username=username)
 
 class NewPostList(generics.ListAPIView, mixins.CreateModelMixin):
     queryset = Post.objects.all()
