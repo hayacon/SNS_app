@@ -18,11 +18,11 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'first_name', 'last_name','profile','posts']
 
-class UserPostSerialzer(serializers.ModelSerializer):
-    posts = PostSerializer(many=True, read_only=True)
-    class Meta:
-        model=User
-        fields = ['username', 'posts']
+# class UserPostSerialzer(serializers.ModelSerializer):
+#     posts = PostSerializer(many=True, read_only=True)
+#     class Meta:
+#         model=User
+#         fields = ['username', 'posts']
 
 class FollowerSerializer(serializers.ModelSerializer):
     class Meta:

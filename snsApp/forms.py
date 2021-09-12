@@ -27,7 +27,6 @@ class UserProfileForm(forms.ModelForm):
         fields = ('dateOfBirth', 'ocupation', 'organization', 'profileImage')
 
 # Forms for user to update their profiles
-
 class UserFormUpdate(forms.ModelForm):
     email = forms.EmailField(required=False, widget=forms.TextInput(attrs={'class':'profile-update', "id":"profile-update"}), label='email:')
     first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class':'profile-update'}), label='first name')
@@ -47,7 +46,6 @@ class UserProfileFormUpdate(forms.ModelForm):
         fields = ('ocupation', 'organization', 'bio', 'profileImage')
 
 #Form to create a new post
-
 class NewPostForm(forms.Form):
     text = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder':'what you reckon?'}), label='', help_text="word limit : 500")
     media = forms.ImageField(label="image", required=False)

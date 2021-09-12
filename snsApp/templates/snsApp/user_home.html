@@ -15,8 +15,10 @@
         <div class="user-home-profile" id="user-home-profile-info">
           <h4 >{{ user }} <a href="/profile" class="hollow button" id="edit-profile-button">edit profile</a></h4>
           <p> {{ user.first_name}} {{ user.last_name}}</p>
+          <p>ocupation : {{ user_profile.ocupation }}</p>
+          <p>organization : {{ user_profile.organization }}</p>
           <p>{{ user_profile.bio }}</p>
-          <p>{{ follower_count}} &nbsp;<a href="/friend_list/">Followers</a>&nbsp;&nbsp;&nbsp;
+          <p>{{ follower_count }} &nbsp;<a href="/friend_list/">Followers</a>&nbsp;&nbsp;&nbsp;
           {{ following_count }} &nbsp;<a href="/friend_list/">Following</a></p>
           <a href="#" class='button' onclick="overlay()" id="create-post-button">create new post</a>
         </div>

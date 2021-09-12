@@ -110,12 +110,7 @@ def main_user_home(request):
             post_form = NewPostForm()
 
         #get all user's post
-        #try use serializer
-        # posts=[]
         post = Post.objects.filter(user=user).order_by('-postId')
-        # for i in post:
-        #     posts.append(i)
-
         #get a count of user's followers and followings
         follower_count = Follower.objects.filter(user=request.user).count()
         following_count = Follower.objects.filter(follower=request.user).count()
@@ -184,7 +179,6 @@ def user_search(request):
         if search:
             result=User.objects.filter(username__contains=search)
             images = []
-            # urls = []
             for user in result:
                 profile_result=AppUser.objects.get(user=user)
                 if profile_result.profileImage:
@@ -192,8 +186,6 @@ def user_search(request):
                     images.append(profile_img)
                 else:
                     images.append(None)
-                # link = "/" + str(user)
-                # urls.append(link)
             search_result = zip(result, images)
             return render(request, "snsApp/search_user.html",{'search_result':search_result})
         else:

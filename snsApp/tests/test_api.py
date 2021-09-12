@@ -81,7 +81,6 @@ class newPostListApiTest(APITestCase):
         self.good_url = reverse('new-post')
         self.bad_url = "api/post/12"
 
-
     def tearDown(self):
         User.objects.all().delete()
         AppUser.objects.all().delete()
@@ -98,7 +97,6 @@ class newPostListApiTest(APITestCase):
         self.assertTrue(response.status_code, 200)
         data = json.loads(response.content)
         self.assertTrue('postId' in data[0])
-
 
     def test_NewPostListOnBadUrl(self):
         response = self.client.get(self.bad_url, format='json')

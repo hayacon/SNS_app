@@ -9,7 +9,7 @@ class AppUserSerializerTest(APITestCase):
 
     def setUp(self):
         self.appuser = AppUserFactory.create()
-        self.appuserserializer =    AppUserSerializer(instance=self.appuser)
+        self.appuserserializer = AppUserSerializer(instance=self.appuser)
 
     def tearDown(self):
         User.objects.all().delete()
@@ -69,27 +69,28 @@ class UserSerializerTest(APITestCase):
         data = self.userserializer.data
         self.assertEqual(set(data.keys()), set(['username', 'first_name', 'last_name','profile','posts']))
 
-class UserPostSerialzerTest(APITestCase):
-    user = None
-    userpostserializer = None
+# class UserPostSerialzerTest(APITestCase):
+#     user = None
+#     userpostserializer = None
+#
+#     def setUp(self):
+#         self.user = UserFactory.create()
+#         self.userpostserializer = UserPostSerialzer(instance=self.user)
+#
+#     def tearDown(self):
+#         User.objects.all().delete()
+#         AppUser.objects.all().delete()
+#         Post.objects.all().delete()
+#         Follower.objects.all().delete()
+#         UserFactory.reset_sequence()
+#         AppUserFactory.reset_sequence()
+#         PostFactory.reset_sequence()
+#         FollowerFactory.reset_sequence()
+#
+#     def test_userPostSerializerHasCorrectFields(self):
+#         data = self.userpostserializer.data
+#         self.assertEqual(set(data.keys()), set(['username', 'posts']))
 
-    def setUp(self):
-        self.user = UserFactory.create()
-        self.userpostserializer = UserPostSerialzer(instance=self.user)
-
-    def tearDown(self):
-        User.objects.all().delete()
-        AppUser.objects.all().delete()
-        Post.objects.all().delete()
-        Follower.objects.all().delete()
-        UserFactory.reset_sequence()
-        AppUserFactory.reset_sequence()
-        PostFactory.reset_sequence()
-        FollowerFactory.reset_sequence()
-
-    def test_userPostSerializerHasCorrectFields(self):
-        data = self.userpostserializer.data
-        self.assertEqual(set(data.keys()), set(['username', 'posts']))
 class FollowerSerializerTest(APITestCase):
     follower = None
     followerserializer = None

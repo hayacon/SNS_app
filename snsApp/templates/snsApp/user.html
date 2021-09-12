@@ -15,6 +15,8 @@
         <div class="user-home-profile" id="user-home-profile-info">
           <h4 >{{ subuser }}</h4>
           <p> {{ subuser.first_name}} {{ subuser.last_name}}</p>
+          <p>ocupation : {{ user_profile.ocupation }}</p>
+          <p>organization : {{ user_profile.organization }}</p>
           <p>{{ user_profile.bio }}</p>
           <p>{{ follower_count }} Followers &nbsp;&nbsp;&nbsp;{{ following_count }} Following</p>
           {% if following %}

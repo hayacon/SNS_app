@@ -10,6 +10,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     email = 'test@factory.com'
     first_name = 'django'
     last_name = 'python'
+    password = '123'
 
     class Meta:
         model = User
