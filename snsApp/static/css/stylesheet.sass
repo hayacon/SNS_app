@@ -1,6 +1,14 @@
 /* Main component stylesheet */
+
+$background : #FAFAF6
+$white : #FFFFFF
+$register-color : hsl(204 100% 48%)
+$line : 1px solid gray
+$block : inline-block
+
+
 body
-  background-color: #FAFAF6
+  background-color: $background
 
 
 .cell
@@ -19,7 +27,7 @@ body
 
 .register-input.date-birth
   width: 67px
-  display: inline-block
+  display: $block
 
 
 #register-button
@@ -27,7 +35,7 @@ body
   height: 30px
   text-align: center
   padding: 0px
-  color: hsl(204 100% 48%)
+  color: $register-color
 
 
 .callout
@@ -47,12 +55,12 @@ body
 
 
 #register-nav
-  color: hsl(204 100% 48%)
+  color: $register-color
 
 /* User home (user_home.html) stylesheet */
 
 .user-home-profile
-  display: inline-block
+  display: $block
   margin-top: 10px
   vertical-align: top
 
@@ -88,7 +96,7 @@ body
   height: 30px
   padding: 8px
   border-radius: 10px
-  display: inline-block
+  display: $block
   vertical-align: middle
 
 
@@ -105,14 +113,14 @@ body
 #overlay div
   width: 400px
   margin: 100px auto
-  border: 1px solid gray
+  border: $line
   padding: 15px
   text-align: center
 
 /* Search result (search_user.htnl) stylesheet */
 
 .search-result
-  display: inline-block
+  display: $block
 
 #search-result-img
   width: 80px
@@ -128,7 +136,7 @@ body
 .profile-update
   width: 150px
   height: 30px
-  display: inline-block
+  display: $block
 
 .small-5.cell p
   text-align: right
@@ -160,8 +168,7 @@ body
 
 
 .sidebar-profile
-  display: inline-block
-  /* border: 1px solid black */
+  display: $block
   margin: auto
 
 
@@ -196,35 +203,25 @@ body
 
 /* Nav bar stylesheet */
 .top-bar
-  background: #FFFFFF
-  border-bottom: 1px solid gray
+  background: $white
+  border-bottom: $line
 
 
 .top-bar-left
   margin-left: 20%
-  /* border: 1px solid black */
 
 
 .top-bar-right
   margin-right: 20%
-  /* border: 1px solid black */
 
 
 .search-bar
   margin: auto
-  /* border: 1px solid black */
 
 
 #search-button
-  background: #FFFFFF
+  background: $white
 
-/* Post stylesheet */
-// .card
-//   width: 100px
-//
-// .post-img
-//   width: 50px
-//   height: 50px
 
 /* icon stylesheet */
 .fi-heart
@@ -249,11 +246,10 @@ a
 .register-footer
   text-align: center
   margin-top: 60px
-  /* border: 1px solid black */
 
 .lower-footer
   margin-top: 10px
 
 .footer-content
-  display: inline-block
+  display: $block
   margin-left: 20px

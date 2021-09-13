@@ -178,7 +178,6 @@ body {
 
 .sidebar-profile {
   display: inline-block;
-  /* border: 1px solid black */
   margin: auto;
 }
 
@@ -220,24 +219,20 @@ body {
 
 .top-bar-left {
   margin-left: 20%;
-  /* border: 1px solid black */
 }
 
 .top-bar-right {
   margin-right: 20%;
-  /* border: 1px solid black */
 }
 
 .search-bar {
   margin: auto;
-  /* border: 1px solid black */
 }
 
 #search-button {
   background: #FFFFFF;
 }
 
-/* Post stylesheet */
 /* icon stylesheet */
 .fi-heart {
   color: red;
@@ -265,7 +260,6 @@ a {
 .register-footer {
   text-align: center;
   margin-top: 60px;
-  /* border: 1px solid black */
 }
 
 .lower-footer {

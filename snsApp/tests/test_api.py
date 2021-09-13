@@ -27,6 +27,7 @@ class userListApiTest(APITestCase):
         PostFactory.reset_sequence()
         FollowerFactory.reset_sequence()
 
+    #test api with successful case
     def test_UserListResultOnSuccess(self):
         response = self.client.get(self.good_url, format='json')
         response.render()
@@ -34,6 +35,7 @@ class userListApiTest(APITestCase):
         data = json.loads(response.content)
         self.assertTrue("username" in data[0])
 
+    #test api with situation where it should return 404
     def test_UserListResultFailOnBadId(self):
         response = self.client.get(self.bad_url, format='json')
         self.assertTrue(response.status_code, 404)
@@ -59,6 +61,7 @@ class postsListApiTest(APITestCase):
         PostFactory.reset_sequence()
         FollowerFactory.reset_sequence()
 
+    #test api with successful case
     def test_PostsListOnSuccess(self):
         response = self.client.get(self.good_url, format='json')
         response.render()
@@ -66,6 +69,7 @@ class postsListApiTest(APITestCase):
         data = json.loads(response.content)
         self.assertTrue("postId" in data[0])
 
+    #test api with situation where it should return 404
     def test_PostsListOnFailWithBadId(self):
         response = self.client.get(self.bad_url, format='json')
         self.assertTrue(response.status_code, 404)
@@ -91,6 +95,7 @@ class newPostListApiTest(APITestCase):
         PostFactory.reset_sequence()
         FollowerFactory.reset_sequence()
 
+    #test api with successful case
     def test_NewPostListOnSuccess(self):
         response = self.client.get(self.good_url, format='json')
         response.render()
@@ -98,6 +103,7 @@ class newPostListApiTest(APITestCase):
         data = json.loads(response.content)
         self.assertTrue('postId' in data[0])
 
+    #test api with situation where it should return 404
     def test_NewPostListOnBadUrl(self):
         response = self.client.get(self.bad_url, format='json')
         self.assertTrue(response.status_code, 404)

@@ -2,6 +2,7 @@ from django.test import TestCase
 from .model_factories import *
 from ..models import *
 
+#test AppUSer model
 class AppUserModelTest(TestCase):
     appuser = None
 
@@ -18,7 +19,6 @@ class AppUserModelTest(TestCase):
         PostFactory.reset_sequence()
         FollowerFactory.reset_sequence()
 
-#fix this test
     def create_AppUser(self, profileImage='abc.jpeg', dateOfBirth='1997-08-10', ocupation='teacher', organization='UoL', bio="hello world"):
         user = User.objects.create(username='user_a')
         return AppUser.objects.create(user=user, profileImage=profileImage, dateOfBirth=dateOfBirth, ocupation=ocupation, organization=organization,bio=bio)
@@ -47,7 +47,7 @@ class AppUserModelTest(TestCase):
         self.assertEqual(max_length, 400)
 
 
-
+#test post model 
 class PostModelTest(TestCase):
     post = None
 
@@ -69,10 +69,12 @@ class PostModelTest(TestCase):
         return Post.objects.create(postId=postId, user=user, postDate=postDate, text=text, likes=likes, media=media)
 
     def test_postModelCreation(self):
+        #test objects creation of Model
         post_objects = self.createPost()
         self.assertTrue(isinstance(post_objects, Post))
 
     def test_testFieldMaxLength(self):
+        #test max_length of 'text' field
         post = Post.objects.get(postId=5)
         max_length = post._meta.get_field('text').max_length
         self.assertEqual(max_length, 500)

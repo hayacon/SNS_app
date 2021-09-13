@@ -22,6 +22,7 @@ class Post(models.Model):
     likes = models.IntegerField(null=True)
     media = models.ImageField(upload_to='images_post')
 
+#model for relationship between users
 class Follower(models.Model):
     user = models.CharField(max_length=200)
     follower = models.CharField(max_length=200)

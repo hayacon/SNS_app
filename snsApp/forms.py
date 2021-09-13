@@ -17,7 +17,6 @@ class UserForm(forms.ModelForm):
 
 # Form for singup
 class UserProfileForm(forms.ModelForm):
-    # YEARS= [x for x in range(1940,2022)]
     dateOfBirth = forms.DateField(widget=forms.SelectDateWidget(years=range(1940,2022), attrs={'placeholder':'DOB(mm/dd/yyyy)', 'class':'register-input date-birth'}), label='date of birth')
     ocupation = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder':'ocupation', 'class':'register-input'}), label='')
     organization = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder':'organization', 'class':'register-input'}), label='')
@@ -27,6 +26,7 @@ class UserProfileForm(forms.ModelForm):
         fields = ('dateOfBirth', 'ocupation', 'organization', 'profileImage')
 
 # Forms for user to update their profiles
+#First form
 class UserFormUpdate(forms.ModelForm):
     email = forms.EmailField(required=False, widget=forms.TextInput(attrs={'class':'profile-update', "id":"profile-update"}), label='email:')
     first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class':'profile-update'}), label='first name')
@@ -36,6 +36,7 @@ class UserFormUpdate(forms.ModelForm):
         model = User
         fields = ('first_name', 'last_name','email')
 
+# Second form
 class UserProfileFormUpdate(forms.ModelForm):
     ocupation = forms.CharField(required=False, widget=forms.TextInput(attrs={'class':'profile-update'}), label='ocupation')
     organization = forms.CharField(required=False, widget=forms.TextInput(attrs={'class':'profile-update'}), label='organization')

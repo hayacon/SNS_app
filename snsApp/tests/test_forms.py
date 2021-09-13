@@ -3,6 +3,7 @@ from .model_factories import *
 from ..forms import *
 from datetime import datetime
 
+#test user form
 class userFormTest(TestCase):
     #test label of each field
     def testUsernameFieldLabel(self):
@@ -37,6 +38,7 @@ class userFormTest(TestCase):
         form = UserForm(data=data)
         self.assertEqual(form.is_valid(), False)
 
+#test user profile form
 class userProfileFormTest(TestCase):
     #test labels of each fields
     def testDateOfBirthFieldLabel(self):
@@ -74,6 +76,7 @@ class userProfileFormTest(TestCase):
         form = UserProfileForm(data=data)
         self.assertTrue(form.is_valid())
 
+#test userFormUpdate form
 class userFormUpdateFormTest(TestCase):
     #test labels of each fields
     def testEmailFieldLabel(self):
@@ -101,6 +104,7 @@ class userFormUpdateFormTest(TestCase):
         form = UserFormUpdate(data=data)
         self.assertEqual(form.is_valid(), False)
 
+#test userProfileUpdate form
 class userProfileFormUpdateFormTest(TestCase):
 
     #test label of each feilds
@@ -133,6 +137,7 @@ class userProfileFormUpdateFormTest(TestCase):
         form = UserProfileFormUpdate(data=data)
         self.assertTrue(form.is_valid())
 
+#test newPost form
 class newPostFormTest(TestCase):
 
     #test label/help_text of each field

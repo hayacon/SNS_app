@@ -5,7 +5,6 @@ from .models import *
 class AppUserAdmin(admin.ModelAdmin):
     list_display=('user', 'profileImage', 'dateOfBirth', 'ocupation', 'organization', 'bio')
 
-
 class PostAdmin(admin.ModelAdmin):
     list_display=('postId', 'user', 'postDate', 'text', 'likes', 'media')
 
