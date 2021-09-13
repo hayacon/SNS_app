@@ -175,7 +175,7 @@ class UserHome(APIView):
                     #create a new chat room name
                     room_name = str(request.user) + '_' + str(username)
                     room_name = str(room_name)
-                if follower_serializer.is_valid(): #data alidation 
+                if follower_serializer.is_valid(): #data alidation
                     follower_serializer.save(chat_room=room_name)
                     following=True
 
